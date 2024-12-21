@@ -1,0 +1,17 @@
+# #
+#   Render > Keeweb ghcr.io badge service
+# #
+
+version: 1
+services:
+    - type: web
+      name: keeweb-ghcr
+      runtime: docker
+      repo: https://github.com/keeweb/keeweb-badges-ghcr
+      plan: free
+      region: oregon
+      healthCheckPath: /health
+      dockerContext: .
+      dockerfilePath: ./Dockerfile
+      domains:
+          - keeweb-ghcr.egpl.dev

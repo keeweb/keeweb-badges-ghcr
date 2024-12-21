@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <title>Keeweb ghcr.io badge generation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <meta name="description" content="ghcr.io status badge generator for gitHub container registry">
+        <meta name="format-detection" content="telephone=no">
+        <link rel="icon" href="/static/favicon.ico">
+        <link rel="apple-touch-icon" href="/static/favicon.png">
+        <meta property="og:site_name" content="keeweb-ghcr">
+        <meta property="og:url" content="https://keeweb-ghcr.egpl.dev">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="keeweb-ghcr">
+        <meta property="og:description" content="ghcr.io status badge generator for gitHub container registry">
+        <meta property="og:image" content="https://keeweb-ghcr.egpl.dev/static/favicon.png">
+        <meta property="og:image:width" content="160">
+        <meta property="og:image:height" content="160">
+        <meta property="og:locale" content="en_US">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:description" content="ghcr.io status badge generator for gitHub container registry">
+        <meta name="twitter:image:src" content="https://keeweb-ghcr.egpl.dev/static/favicon.png">
+        <script>
+            const doUpdateImages = (targetId) => {
+                const owner = encodeURIComponent(document.getElementById("owner").value);
+                const name = encodeURIComponent(document.getElementById("name").value);
+                if (!(owner || name)) return;
+                const imgElms = document.querySelectorAll("main > div > a > img");
+                Array.from(imgElms).filter((e) => targetId === undefined || targetId === e.id).forEach((e) => {
+                    const url = new URL(`${window.location.origin}/${owner}/${name}/${e.id}`);
+                    const optionElms = document.querySelectorAll(`div[id="${e.id}-options"] > input`);
+                    Array.from(optionElms).forEach((o) => {
+                        url.searchParams.set(o.className, o.value);
+                    });
+                    const urlString = url.toString();
+                    e.src = urlString;
+                    document.getElementById(`${e.id}-link`).href = urlString;
+                });
+            };
+            window.onload = (_event) => doUpdateImages(undefined);
+        </script>
+        <style>
+
+            html {
+                color-scheme: dark;
+            }
+
+            body {
+                flex-direction: column;
+                display: flex;
+                min-height: 100vh;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                background-color: #202020;
+                color: #FFF;
+                font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+            }
+
+            header {
+                background-color: #0d0d0d;
+                margin: 0;
+                padding: 0;
+                position: sticky;
+                top: 0;
+                align-content: center;
+            }
+
+            h1 {
+                font-weight: 100;
+                margin: 0;
+                font-size: 22pt;
+            }
+
+            h2 {
+                font-weight: 400;
+            }
+
+            hr {
+                border-bottom: 1px dotted rgb(106.5, 106.5, 107);
+                border-left: 0;
+                border-right: 0;
+                border-top: 0;
+                margin-top: 40px;
+                margin-bottom: 40px;
+            }
+
+            main {
+                height: 100%;
+                display: flex;
+                flex: 1;
+            }
+
+            main>img {
+                margin-bottom: 10px
+            }
+
+            .main {
+                flex: content;
+                height: 100%;
+                width: 100vw;
+                margin: auto;
+            }
+
+            .container-title {
+                height: 64px;
+                align-content: center;
+            }
+
+            .container-top {
+                background-color: #970443;
+                height: 60px;
+                align-content: center;
+                padding: 0px;
+                margin: 0px;
+                color: #FFF;
+                font-weight: 400;
+            }
+
+            .container-top .button-generate {
+                background-color: #d4d5d8;
+                color: #000;
+                border-radius: 8px;
+            }
+
+            .container-top input[type="text"] {
+                border: 1px solid #fd529b;
+            }
+
+            main>div>div.options>input[type="text"] {
+                width: 70px
+            }
+
+            main>div>div.options>input[type="number"] {
+                width: 35px
+            }
+
+            footer>span {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            label {
+                padding-left: 20px;
+                padding-right: 5px;
+            }
+
+            input[type="number"] {
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 10px;
+                padding-right: 7px;
+                border: 1px solid #313131;
+                background-color: #171717;
+                color: #FFF;
+            }
+
+            input[type="number"]:focus-visible {
+                border: 1px solid #DF094F;
+                outline: none;
+            }
+
+            input[type="text"] {
+                background-color: #171717;
+                border: 1px solid #484848;
+                font-weight: 100;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+                color: #FFF;
+            }
+
+            input[type="text"]:focus-visible {
+                border: 1px solid #DF094F;
+                outline: none;
+            }
+
+            input[type="color"] {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                background-color: transparent;
+                width: 30px;
+                height: 30px;
+                border: none;
+                cursor: pointer;
+                position: fixed;
+                margin-right: 15px;
+                margin-top: 0px;
+                margin-left: -20px;
+                color: #FFF;
+            }
+
+            input[type="color"]::-moz-color-swatch {
+                border-radius: 20px;
+                border: none;
+            }
+
+            input[type="color"]:focus-visible {
+                border: 1px solid #DF094F;
+                outline: none;
+            }
+
+            input[type="color"]:hover {
+                cursor: pointer;
+            }
+
+            .button-generate {
+                margin-left: 8px;
+                padding-top: 5px;
+                padding-left: 15px;
+                padding-right: 15px;
+                background-color: #99032D;
+                color: #FFF;
+                border: 1px solid #f0f0f036;
+                padding-bottom: 5px;
+            }
+
+            .button-generate:hover {
+                background-color: #ccc;
+                border-color: #FFF;
+                cursor: pointer;
+            }
+
+            .button-tags {
+                margin-left: 8px;
+                padding-top: 5px;
+                padding-left: 15px;
+                padding-right: 15px;
+                background-color: #c8085a;
+                color: #FFF;
+                border: 1px solid #ce5f8380;
+                padding-bottom: 5px;
+                border-radius: 8px;
+            }
+
+            .button-tags:hover {
+                cursor: pointer;
+                background-color: #FFF;
+                color: #000;
+            }
+
+            .grouping {
+                height: 45px;
+                align-content: center;
+                padding-top: 20px;
+            }
+
+            footer {
+                background-color: #0f0f0f;
+                padding-top: 20px;
+                padding-bottom: 20px;
+                width: 100%;
+            }
+
+            footer a {
+                color: #EE115A;
+                text-decoration: none;
+            }
+
+            footer a:hover {
+                color: #FFF;
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="container-title"><h1>ghcr.io Badge Generator</h1></div>
+            <div class="container-top"> ghcr.io / <input type="text" id="owner" placeholder="owner" value="keeweb" required> / <input type="text" id="name" placeholder="name" value="keeweb" required>
+                <button class="button-generate" type="submit" onclick="doUpdateImages(undefined)">Generate</button>
+            </div>
+        </header>
+        <main>
+            <div class="main">
+                <h2>Tags</h2>
+
+                <a id="tags-link">
+                    <img alt="tags-badge" id="tags" src="data:,">
+                </a>
+
+                <div class="form__group field options grouping" id="tags-options">
+                    <input type="color" name="color" class="color" id="tags-color" value="#3d9e18"> <label for="tags-ignore">ignore:</label>
+                    <input type="text" name="ignore" class="ignore" id="tags-ignore" value="latest"> <label for="tags-limit">limit:</label>
+                    <input type="number" name="limit" class="limit" id="tags-limit" value="3" min="1"> <label for="tags-label">label:</label>
+                    <input type="text" name="label" class="label" id="tags-label" value="tags"> <label for="tags-trim">trim:</label>
+                    <input type="text" name="trim" class="trim" id="tags-trim" value="">
+                    <button class="button-tags" type="submit" onclick="doUpdateImages('tags')">Apply</button>
+                </div>
+                <hr>
+                <h2>Latest</h2>
+                <a id="latest_tag-link">
+                    <img alt="latest_tags-badge" id="latest_tag" src="data:,">
+                </a>
+                <div class="options grouping" id="latest_tag-options">
+                    <input type="color" name="color" class="color" id="latest_tag-color" value="#3d9e18"> <label for="latest_tag-ignore">ignore:</label>
+                    <input type="text" name="ignore" class="ignore" id="latest_tag-ignore" value="latest"> <label for="latest_tag-label">label:</label>
+                    <input type="text" name="label" class="label" id="latest_tag-label" value="version"> <label for="latest_tag-trim">trim:</label>
+                    <input type="text" name="trim" class="trim" id="latest_tag-trim" value="">
+                    <button class="button-tags" type="submit" onclick="doUpdateImages('latest_tag')">Apply</button>
+                </div>
+
+                <hr>
+
+                <h2>Size</h2>
+                <a id="size-link">
+                    <img alt="size-badge" id="size" src="data:,">
+                </a>
+                <div class="options grouping" id="size-options">
+                    <input type="color" name="color" class="color" id="size-color" value="#3d9e18"> <label for="size-tag">tag:</label>
+                    <input type="text" name="tag" class="tag" id="size-tag" value="latest"> <label for="size-label">label:</label>
+                    <input type="text" name="label" class="label" id="size-label" value="size"> <label for="size-trim">trim:</label>
+                    <input type="text" name="trim" class="trim" id="size-trim" value="">
+                    <button class="button-tags" type="submit" onclick="doUpdateImages('size')">Apply</button>
+                </div>
+            <br />
+        </main>
+        <footer>
+            <span>
+                <a href="{{ repo_link }}" target="_blank">keeweb-ghcr</a> › v{{ version }}
+            </span>
+        </footer>
+    </body>
