@@ -78,6 +78,19 @@ on:
                 type:         string
 
             # #
+            #   Pypi Service
+            #   specifies which pypi service your package is uploaded to (or skip for no upload)
+            # #
+
+            PYPI_RELEASE_TYPE:
+                description: '🐍 Upload to PyPi.org Service'
+                type: choice
+                options:
+                    - Skip
+                    - Official
+                    - Test
+
+            # #
             #   true            no changes to the repo will be made
             #   false           workflow will behave normally, and push any changes detected to the files
             # #
@@ -178,6 +191,7 @@ jobs:
     release-pypi:
         name: >-
             📦 Release › Pypi
+        if: ${{ github.event.inputs.PYPI_RELEASE_TYPE != 'Skip' }}
         runs-on: ubuntu-latest
         needs: [ release-github ]
         steps:
@@ -193,15 +207,27 @@ jobs:
                   persist-credentials: false
 
             # #
-            #   Release › Pypi › Publish
+            #   Release › Pypi › Publish (Official)
             # #
 
-            - name: '📦 Publish › Pypi'
+            - name: '📦 Publish › Pypi › Official'
               id: task_pypi_publish
               uses: JRubics/poetry-publish@v2.0
-              if: ( github.event_name == 'workflow_dispatch' && inputs.DRY_RUN == false ) || ( github.event_name == 'push' )
+              if: ( github.event.inputs.PYPI_RELEASE_TYPE == 'Official' && inputs.DRY_RUN == false )
               with:
                   pypi_token: ${{ secrets.PYPI_API_TOKEN }}
+
+            # #
+            #   Release › Pypi › Publish (Test)
+            # #
+
+            - name: '📦 Publish › Pypi › Test'
+              id: task_pypi_publish_test
+              uses: JRubics/poetry-publish@v2.0
+              if: ( github.event.inputs.PYPI_RELEASE_TYPE == 'Test' && inputs.DRY_RUN == false )
+              with:
+                  pypi_token: ${{ secrets.PYPI_API_TEST_TOKEN }}
+                  repository_url: "https://test.pypi.org/legacy/"
 
     # #
     #   Job › Release › Ghcr.io
