@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Submit Issue
+    url: https://github.com/keeweb/keeweb/issues/new/choose
+    about: Submit your issue on our main repository, and remember to reference with app you are talking about.
