@@ -7,7 +7,15 @@ requires = [
 ]
 
 [tool.poetry]
+name = "keeweb_ghcr"
+repository = "https://github.com/keeweb/keeweb-badges-ghcr"
+version = "0.5.1"
+license = "MIT"
+readme = "README.md"
+description = "ghcr.io badge generation"
+
 authors = [
+  "Aetherinox <aetherinox@github.com>",
   "EuropaServ <europaserv@github.com>",
 ]
 
@@ -19,7 +27,6 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
 ]
 
-description = "ghcr.io badge generation"
 keywords = [
   "badge",
   "ghcr",
@@ -28,15 +35,9 @@ keywords = [
   "github"
 ]
 
-name = "keeweb_ghcr"
 packages = [
   { include = "keeweb_ghcr" },
 ]
-
-license = "MIT"
-readme = "README.md"
-repository = "https://github.com/Aetherinox/p"
-version = "0.5.1"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.13"
