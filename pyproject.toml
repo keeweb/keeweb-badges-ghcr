@@ -7,7 +7,7 @@ requires = [
 ]
 
 [tool.poetry]
-name = "keeweb_ghcr"
+name = "keeweb-ghcr"
 repository = "https://github.com/keeweb/keeweb-badges-ghcr"
 version = "0.5.1"
 license = "MIT"
