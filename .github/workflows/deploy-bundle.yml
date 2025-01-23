@@ -212,7 +212,7 @@ jobs:
 
             - name: '📦 Publish › Pypi › Official'
               id: task_pypi_publish
-              uses: JRubics/poetry-publish@v2.0
+              uses: JRubics/poetry-publish@v2.1
               if: ( github.event.inputs.PYPI_RELEASE_TYPE == 'Official' && inputs.DRY_RUN == false )
               with:
                   pypi_token: ${{ secrets.PYPI_API_TOKEN }}
@@ -224,7 +224,7 @@ jobs:
 
             - name: '📦 Publish › Pypi › Test'
               id: task_pypi_publish_test
-              uses: JRubics/poetry-publish@v2.0
+              uses: JRubics/poetry-publish@v2.1
               if: ( github.event.inputs.PYPI_RELEASE_TYPE == 'Test' && inputs.DRY_RUN == false )
               with:
                   pypi_token: ${{ secrets.PYPI_API_TEST_TOKEN }}
